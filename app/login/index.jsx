@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, Pressable } from 'react-native'
 import React from 'react'
 import Colors from './../../constants/Colors'
 
@@ -25,6 +25,21 @@ export default function LoginScreen() {
             textAlign: 'center',
             color: Colors.GRAY,
         }}>Let's adopt the pet which you like and make there life happy again</Text>
+
+        <Pressable style={{
+            padding: 14,
+            marginTop: 100,
+            backgroundColor: Colors.PRIMARY,
+            width: '100%',
+            borderRadius: 14,
+        }}>
+            <Text style={{
+                fontWeight: 'bold',
+                textAlign: 'center',
+                fontSize: 20,
+                color: Colors.WHITE,
+            }}>Get Started</Text>
+        </Pressable>
         </View>
     </View>
   )
