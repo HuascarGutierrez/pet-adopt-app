@@ -2,6 +2,7 @@ import { View, Text, FlatList, Image, StyleSheet, Dimensions } from 'react-nativ
 import { collection, query, where, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from 'react'
 import { db } from '../../config/FirebaseConfig';
+import stylesGlobal from '../../constants/styles';
 
 export default function Slider() {
 
@@ -25,6 +26,7 @@ export default function Slider() {
 
   return (
     <View style={styles.slider}>
+        <Text style={stylesGlobal.title}>News</Text>
       <FlatList
         horizontal= {true}
         showsHorizontalScrollIndicator= {false}
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     },
     sliderImage: {
         width: Dimensions.get('screen').width * 0.9,
-        height: 160,
+        height: 200,
         borderRadius: 15,
         marginRight: 15,
     }
