@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native'
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import stylesGlobal from '../../constants/styles'
 import { collection, getDocs } from 'firebase/firestore'
@@ -8,6 +8,7 @@ import Colors from '../../constants/Colors'
 export default function Category() {
 
     const [categoryList, setCategoryList] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState('Cats')
 
     useEffect(()=>{
         GetCategories();
@@ -29,12 +30,14 @@ export default function Category() {
         data={categoryList}
         renderItem={({item,index})=>
             (
-                <View style={{flex: 1}}>
-                    <View style={styles.container}>
+                <TouchableOpacity
+                    onPress={()=> setSelectedCategory(item.name)}
+                 style={{flex: 1}}>
+                    <View style={[styles.container, selectedCategory == item.name && styles.selected_container]}>
                     <Image source= {{uri: item?.imageUrl}} style= {{width: 50, height: 50}}/>
                     <Text style={{fontFamily: 'outfit-thin'}}>{item?.name}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
             )
         }/>
     </View>
@@ -53,5 +56,9 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         borderColor: Colors.PRIMARY,
         margin: 5,
+    },
+    selected_container: {
+        backgroundColor: Colors.SECONDARY,
+        borderColor: Colors.SECONDARY,
     }
 })
