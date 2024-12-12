@@ -4,29 +4,30 @@ import { Stack } from "expo-router";
 import * as SecureStore from 'expo-secure-store'
 import { Platform } from 'react-native'
 
-const createTokenCache = () => {
-  return {
-    getToken: async (key) => {
-      try {
-        const item = await SecureStore.getItemAsync(key)
-        if (item) {
-          console.log(`${key} was used 🔐 \n`)
-        } else {
-          console.log('No values stored under key: ' + key)
-        }
-        return item
-      } catch (error) {
-        console.error('secure store get item error: ', error)
-        await SecureStore.deleteItemAsync(key)
-        return null
+const tokenCache = {
+  async getToken(key) {
+    try{
+      const item = await SecureStore.getItemAsync(key)
+      if(item){
+        console.log(`${key} was used\n`)
+      } else{
+        console.log('No values stored under key: '+ key)
       }
-    },
-    saveToken: (key, token) => {
-      return SecureStore.setItemAsync(key, token)
-    },
-  }
+      return item
+    } catch (error) {
+      console.error('SecureStore get item error: ', error)
+      await SecureStore.deleteItemAsync(key)
+      return null
+    }
+  },
+  async saveToken(key, value) {
+    try{
+      return SecureStore.setItemAsync(key, value)
+    } catch(err){
+      return
+    }
+  },
 }
-const tokenCache = Platform.OS !== 'web' ? createTokenCache() : undefined
 
 
 export default function RootLayout() {
@@ -42,17 +43,19 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
-    <Stack>
-      <Stack.Screen name="index"/>
-      <Stack.Screen name="(tabs)"
-        options={{
-          headerShown: false,
-        }}/>
-      <Stack.Screen name="login/index"
-        options={{
-          headerShown: false,
-        }}/>
-    </Stack>
+      <ClerkLoaded>
+        <Stack>
+        <Stack.Screen name="index"/>
+        <Stack.Screen name="(tabs)"
+          options={{
+            headerShown: false,
+          }}/>
+        <Stack.Screen name="login/index"
+          options={{
+            headerShown: false,
+          }}/>
+      </Stack>
+      </ClerkLoaded>
     </ClerkProvider>
   );
 }

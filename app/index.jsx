@@ -25,8 +25,8 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      {isSignedIn?
-        <Redirect href={'/(tabs)/home'}/>:
+      { user?
+        <Redirect href={'(tabs)/home'}/>:
         <Redirect href={'login'}/>
       }
     </View>

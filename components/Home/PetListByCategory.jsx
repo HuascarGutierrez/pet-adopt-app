@@ -5,12 +5,13 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../../config/FirebaseConfig'
 import stylesGlobal from '../../constants/styles'
 import PetListItem from './PetListItem'
+import { ScrollView } from 'react-native'
 
 export default function PetListByCategory() {
 
   const [petList, setPetList] = useState([])
   useEffect(()=>{
-    GetPetList('Dogs');
+    GetPetList('Cats');
   },[])
 
   const GetPetList = async(category) => {
@@ -19,6 +20,7 @@ export default function PetListByCategory() {
       const CatSnapshot = await getDocs(q);
 
       CatSnapshot.forEach(doc => {
+        console.log(doc.data())
         setPetList(petList=>[...petList,doc.data()])
       });
   }
@@ -27,12 +29,13 @@ export default function PetListByCategory() {
     <View>
       <Category category={(value)=>{GetPetList(value)}}/>
       <Text style={stylesGlobal.title}>Pet List</Text>
-      <FlatList
-        data={petList}
-        renderItem={({item, index})=>(
-          <PetListItem pet={item}/>
-        )}
-      />
+        <FlatList
+          horizontal={true}
+          data={petList}
+          renderItem={({item, index})=>(
+            <PetListItem pet={item}/>
+          )}
+        />
     </View>
   )
 }
