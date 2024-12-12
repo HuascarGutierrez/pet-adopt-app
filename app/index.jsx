@@ -5,7 +5,7 @@ import { Pressable, Text, View } from "react-native";
 
 export default function Index() {
 
-  const {user} = useUser();
+  const {isSignedIn, user} = useUser();
 
   const rootNativationState = useRootNavigationState()
 
@@ -25,7 +25,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      {user?
+      {isSignedIn?
         <Redirect href={'/(tabs)/home'}/>:
         <Redirect href={'login'}/>
       }
