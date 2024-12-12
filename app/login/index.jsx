@@ -4,6 +4,7 @@ import Colors from './../../constants/Colors'
 import * as WebBrowser from 'expo-web-browser'
 import * as Linking from 'expo-linking'
 import { useOAuth } from '@clerk/clerk-expo'
+import { Redirect } from 'expo-router'
 
 export const useWarmUpBrowser = () => {
     React.useEffect(() => {
@@ -31,7 +32,6 @@ export default function LoginScreen() {
             //setActive!({ session: createdSessionId })
           } else {
             //this is the part that need fixing 
-            
             // Use signIn or signUp returned from startOAuthFlow
             // for next steps, such as MFA
           }
