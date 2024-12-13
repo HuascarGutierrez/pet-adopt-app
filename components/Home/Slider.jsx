@@ -47,8 +47,9 @@ const styles = StyleSheet.create({
     },
     sliderImage: {
         width: Dimensions.get('screen').width * 0.9,
-        height: 200,
+        height: 150,
         borderRadius: 15,
         marginRight: 15,
+        objectFit: 'fill',
     }
 })
