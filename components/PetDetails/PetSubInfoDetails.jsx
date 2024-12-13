@@ -1,14 +1,22 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, Image, Text, StyleSheet } from 'react-native'
 import Colors from '../../constants/Colors'
-import PetSubInfoDetails from './PetSubInfoDetails'
+import React from 'react'
 
-export default function PetSubInfo({pet}) {
+const imagePaths = {
+    Age: require( './../../assets/images/sub-info-images/calendar.png'),
+    
+}
+
+export default function PetSubInfoDetails({pet, image, detail}) {
   return (
-    <View style={{padding: 15}}>
+    <View>
+      <View style={styles.pet_subInfo_detail}>
+        <Image source={imagePaths[detail]} style={styles.pet_subInfo_image}/>
         <View>
-            <PetSubInfoDetails pet={pet} detail={'Age'}/>
+            <Text style={styles.pet_subInfo_title}>{detail}</Text>
+            <Text style={styles.pet_subInfo_content}>{pet?.age}</Text>
         </View>
+      </View>
     </View>
   )
 }
