@@ -31,11 +31,14 @@ export default function PetListByCategory() {
   }
 
   return (
+    <>
     <View>
       <Category category={(value)=>{GetPetList(value)}}/>
       <Text style={stylesGlobal.title}>Pet List</Text>
-        <FlatList
-          horizontal={true}
+    </View>
+    <FlatList
+          //horizontal={true}
+          numColumns={2}
           data={petList}
           refreshing={loader}
           onRefresh={()=>GetPetList('Cats')}
@@ -43,6 +46,6 @@ export default function PetListByCategory() {
             <PetListItem pet={item}/>
           )}
         />
-    </View>
+    </>
   )
 }

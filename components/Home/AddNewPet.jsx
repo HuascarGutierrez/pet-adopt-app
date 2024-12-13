@@ -1,20 +1,19 @@
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native'
 import React from 'react'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
 
 export default function AddNewPet() {
   return (
-    <View style={styles.button}>
+    <Pressable style={styles.button}>
       <MaterialIcons name="pets" size={24} color={Colors.PRIMARY} />
       <Text style={styles.button_text}>Add New Pet</Text>
-    </View>
+    </Pressable>
   )
 }
 
 const styles = StyleSheet.create({
     button: {
-        marginTop: 10,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
