@@ -10,32 +10,42 @@ import { ScrollView } from 'react-native'
 export default function PetListByCategory() {
 
   const [petList, setPetList] = useState([])
+  const [loader, setLoader] = useState(false)
+
   useEffect(()=>{
     GetPetList('Cats');
   },[])
 
   const GetPetList = async(category) => {
+      setLoader(true)
+
       setPetList([]);
       const q = query(collection(db, "Pets"),where('category','==',category));
       const CatSnapshot = await getDocs(q);
 
       CatSnapshot.forEach(doc => {
-        console.log(doc.data())
         setPetList(petList=>[...petList,doc.data()])
       });
+
+      setLoader(false)
   }
 
   return (
+    <>
     <View>
       <Category category={(value)=>{GetPetList(value)}}/>
       <Text style={stylesGlobal.title}>Pet List</Text>
-        <FlatList
-          horizontal={true}
+    </View>
+    <FlatList
+          //horizontal={true}
+          numColumns={2}
           data={petList}
+          refreshing={loader}
+          onRefresh={()=>GetPetList('Cats')}
           renderItem={({item, index})=>(
             <PetListItem pet={item}/>
           )}
         />
-    </View>
+    </>
   )
 }
