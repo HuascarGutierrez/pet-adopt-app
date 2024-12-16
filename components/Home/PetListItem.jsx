@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router'
 import MarkFavorite from '../MarkFavorite'
 
 export default function PetListItem({pet}) {
+
   const router = useRouter();
   return (
     <Pressable onPress={()=>router.push({pathname:'/pet-details', params: pet})} 

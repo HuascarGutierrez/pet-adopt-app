@@ -6,7 +6,8 @@ import MarkFavorite from '../MarkFavorite'
 export default function PetInfo({pet}) {
   return (
     <View>
-      <Image source={{uri: pet?.imageUrl}} style={styles.pet_image}/>
+      <Image source={{uri: pet.imageUrl}} style={styles.pet_image}/>
+      <Text>{pet.imageUrl}</Text>
       <View style={styles.pet_principal}>
         <View style={styles.pet_name_container}>
             <Text style={styles.pet_name}>{pet?.name}</Text>
