@@ -2,10 +2,12 @@ import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native'
 import React from 'react'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
+import { useRouter } from 'expo-router';
 
 export default function AddNewPet() {
+  const router = useRouter();
   return (
-    <Pressable style={styles.button}>
+    <Pressable onPress={()=>router.push({pathname:'/add-new-pet'})} style={styles.button}>
       <MaterialIcons name="pets" size={24} color={Colors.PRIMARY} />
       <Text style={styles.button_text}>Add New Pet</Text>
     </Pressable>

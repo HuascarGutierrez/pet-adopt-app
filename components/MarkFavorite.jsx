@@ -18,17 +18,19 @@ export default function MarkFavorite({pet, colorNotFavorite='white'}) {
     }
 
     const AddToFav = async() =>{
-      const favoriteList = favList;
+      const data = await Shared.GetFavoriteList(user);
+      const favoriteList = data.favorites
       favoriteList.push(Number(pet.id));
       await Shared.UpdateFavoriteList(user,favoriteList);
-      GetFav();
+      setFavList(favoriteList);
     }
 
     const RemToFav = async() => {
-      const favoriteList = favList;
+      const data = await Shared.GetFavoriteList(user);
+      const favoriteList = data.favorites
       const newList = favoriteList.filter(item => item !== Number(pet.id))
       await Shared.UpdateFavoriteList(user,newList);
-      GetFav();
+      setFavList(newList);
     }
 
   return (
