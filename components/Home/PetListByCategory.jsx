@@ -11,9 +11,10 @@ export default function PetListByCategory() {
 
   const [petList, setPetList] = useState([])
   const [loader, setLoader] = useState(false)
+  const [category, setCategory] = useState('Cats')
 
   useEffect(()=>{
-    GetPetList('Cats');
+    GetPetList(category);
   },[])
 
   const GetPetList = async(category) => {
@@ -32,7 +33,7 @@ export default function PetListByCategory() {
   return (
     <>
     <View>
-      <Category category={(value)=>{GetPetList(value)}}/>
+      <Category category={(value)=>{GetPetList(value); setCategory(value)}}/>
       <Text style={stylesGlobal.title}>Pet List</Text>
     </View>
     <FlatList
@@ -40,7 +41,7 @@ export default function PetListByCategory() {
           numColumns={2}
           data={petList}
           refreshing={loader}
-          onRefresh={()=>GetPetList('Cats')}
+          onRefresh={()=>GetPetList(category)}
           renderItem={({item, index})=>(
             <PetListItem pet={item}/>
           )}
