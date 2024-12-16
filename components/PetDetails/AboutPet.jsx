@@ -10,7 +10,7 @@ export default function AboutPet({pet}) {
         <View style={{paddingHorizontal: 15}}>
         <Text style={stylesGlobal.title}>About {pet?.name}: </Text >
         <Text numberOfLines={readMore?4:20}>{pet?.about}</Text>
-        <Pressable onPress={()=>{setReadMore(!readMore)}}><Text style={{fontFamily:'outfit', color: Colors.GRAY, fontSize: 13, marginBottom: 10}}>Read {readMore?'Read More':'Read Less'}...</Text></Pressable>
+        <Pressable onPress={()=>{setReadMore(!readMore)}}><Text style={{fontFamily:'outfit', color: Colors.GRAY, fontSize: 13, marginBottom: 10}}>Read {readMore?' More':' Less'}...</Text></Pressable>
     </View>
   )
 }

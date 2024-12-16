@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
 import Colors from '../../constants/Colors'
-import Ionicons from '@expo/vector-icons/Ionicons';
+import MarkFavorite from '../MarkFavorite'
 
 export default function PetInfo({pet}) {
   return (
@@ -12,7 +12,7 @@ export default function PetInfo({pet}) {
             <Text style={styles.pet_name}>{pet?.name}</Text>
             <Text style={styles.pet_address}>{pet?.address}</Text>
         </View>
-        <Ionicons name="heart-outline" size={42} color="black" />
+        <MarkFavorite pet={pet} colorNotFavorite='black'/>
       </View>
     </View>
   )

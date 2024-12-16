@@ -26,7 +26,6 @@ export default function PetListByCategory() {
       CatSnapshot.forEach(doc => {
         setPetList(petList=>[...petList,doc.data()])
       });
-
       setLoader(false)
   }
 

@@ -7,10 +7,10 @@ import AboutPet from '../../components/PetDetails/AboutPet';
 import OwnerInfo from '../../components/PetDetails/OwnerInfo';
 import Colors from '../../constants/Colors';
 
+
 export default function PetDetails() {
     const pet = useLocalSearchParams();
     const navigation = useNavigation();
-
     useEffect(()=>{
         navigation.setOptions({
             headerTransparent: true,
@@ -29,15 +29,18 @@ export default function PetDetails() {
           </ScrollView>
         </View>
 
-        <Pressable style={styles.adopt_me_button}>
-        <Text style={styles.adopt_me_text}>Adopt me</Text>
-        </Pressable>
+        <View style={{width: '100%', paddingHorizontal: 15}}>
+          <Pressable style={styles.adopt_me_button}>
+          <Text style={styles.adopt_me_text}>Adopt me</Text>
+          </Pressable>
+        </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   adopt_me_button: {
+    width: '100%',
     position: 'absolute',
     bottom: 0,
     marginInline: 15,
