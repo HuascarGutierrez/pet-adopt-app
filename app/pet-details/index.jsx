@@ -32,7 +32,7 @@ export default function PetDetails() {
     <View>
         <View >
           <ScrollView >
-          <PetInfo pet={data}/>
+          <PetInfo pet={pet} imageUrl={data.imageUrl}/>
           <PetSubInfo pet={pet}/>
           <AboutPet pet={pet}/>
           <OwnerInfo pet={pet}/>
