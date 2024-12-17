@@ -1,27 +1,38 @@
 import { View, Text, Image, ScrollView, Pressable, StyleSheet } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
 import PetInfo from '../../components/PetDetails/PetInfo';
 import PetSubInfo from '../../components/PetDetails/PetSubInfo';
 import AboutPet from '../../components/PetDetails/AboutPet';
 import OwnerInfo from '../../components/PetDetails/OwnerInfo';
 import Colors from '../../constants/Colors';
-
+import { query, getDocs, collection, where } from 'firebase/firestore';
+import { db } from '../../config/FirebaseConfig';
 
 export default function PetDetails() {
     const pet = useLocalSearchParams();
     const navigation = useNavigation();
+    const [data, setData] = useState('');
+    
     useEffect(()=>{
+      GetPetData(pet.id)
         navigation.setOptions({
             headerTransparent: true,
             headerTitle: '',
         })
     },[])
-  return (
+
+    const GetPetData = async(petId) => {
+          const q = query(collection(db, "Pets"),where('id','==',Number(petId)));
+          const CatSnapshot = await getDocs(q);
+          CatSnapshot.forEach(doc=>{setData(doc.data())})
+      }
+
+    return (
     <View>
         <View >
           <ScrollView >
-          <PetInfo pet={pet}/>
+          <PetInfo pet={data}/>
           <PetSubInfo pet={pet}/>
           <AboutPet pet={pet}/>
           <OwnerInfo pet={pet}/>
