@@ -15,12 +15,13 @@ export default function ChatScreen() {
 
   //console.log(params);
   const GetUserDetails = async() => {
+    navigation.setOptions({headerTitle: ''})
     const docRef = doc(db,'Chat',params?.id);
     const docSnap = await getDoc(docRef);
     const result = docSnap.data();
     //console.log(result)
     const otherUserL = result?.users.filter(item=>item.email!=user?.primaryEmailAddress.emailAddress)
-    console.log(otherUserL[0])
+    //console.log(otherUserL[0])
     navigation.setOptions({headerTitle: otherUserL[0]?.name})
   }
 

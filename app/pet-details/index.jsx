@@ -54,7 +54,8 @@ export default function PetDetails() {
               imageUrl: pet?.userImageUrl,
               name: pet?.userName,
             }
-          ]
+          ],
+          userIds: [user?.primaryEmailAddress.emailAddress,pet?.userEmail]
         });
         router.push({pathname: '/chat', params: {id:docId1}})
       }
