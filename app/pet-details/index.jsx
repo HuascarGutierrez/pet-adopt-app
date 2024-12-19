@@ -1,18 +1,21 @@
 import { View, Text, Image, ScrollView, Pressable, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useLocalSearchParams, useNavigation } from 'expo-router'
+import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router'
 import PetInfo from '../../components/PetDetails/PetInfo';
 import PetSubInfo from '../../components/PetDetails/PetSubInfo';
 import AboutPet from '../../components/PetDetails/AboutPet';
 import OwnerInfo from '../../components/PetDetails/OwnerInfo';
 import Colors from '../../constants/Colors';
-import { query, getDocs, collection, where } from 'firebase/firestore';
+import { query, getDocs, collection, where, setDoc, doc } from 'firebase/firestore';
 import { db } from '../../config/FirebaseConfig';
+import { useUser } from '@clerk/clerk-expo';
 
 export default function PetDetails() {
     const pet = useLocalSearchParams();
     const navigation = useNavigation();
     const [data, setData] = useState('');
+    const {user} = useUser()
+    const router = useRouter()
     
     useEffect(()=>{
       GetPetData(pet.id)
@@ -28,6 +31,35 @@ export default function PetDetails() {
           CatSnapshot.forEach(doc=>{setData(doc.data())})
       }
 
+    const InitiateChat = async () => {
+      const docId1 = user?.primaryEmailAddress.emailAddress+'_'+pet?.userEmail
+      const docId2 = pet?.userEmail+'_'+user?.primaryEmailAddress.emailAddress
+
+      const q = query(collection(db,'Chat'),where('id','in',[docId1,docId2]))
+      const querySnapshot = await getDocs(q)
+      querySnapshot.forEach(doc =>{ 
+        router.push({pathname: '/chat', params: {id: doc.id}})
+      })
+      if(querySnapshot.size == 0) {
+        await setDoc(doc(db,'Chat',docId1),{
+          id: docId1,
+          users: [
+            {
+              email: user?.primaryEmailAddress.emailAddress,
+              imageUrl: user?.imageUrl,
+              name: user?.fullName,
+            },
+            {
+              email: pet?.userEmail,
+              imageUrl: pet?.userImageUrl,
+              name: pet?.userName,
+            }
+          ]
+        });
+        router.push({pathname: '/chat', params: {id:docId1}})
+      }
+    }
+
     return (
     <View>
         <View >
@@ -41,7 +73,7 @@ export default function PetDetails() {
         </View>
 
         <View style={{width: '100%', paddingHorizontal: 15}}>
-          <Pressable style={styles.adopt_me_button}>
+          <Pressable onPress={InitiateChat} style={styles.adopt_me_button}>
           <Text style={styles.adopt_me_text}>Adopt me</Text>
           </Pressable>
         </View>
