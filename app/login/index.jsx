@@ -3,7 +3,7 @@ import React, { useCallback } from 'react'
 import Colors from './../../constants/Colors'
 import * as WebBrowser from 'expo-web-browser'
 import * as Linking from 'expo-linking'
-import { useOAuth } from '@clerk/clerk-expo'
+import { useOAuth, useUser } from '@clerk/clerk-expo'
 import { Redirect } from 'expo-router'
 
 export const useWarmUpBrowser = () => {
@@ -24,12 +24,11 @@ export default function LoginScreen() {
     const onPress = useCallback(async () => {
         try {
           const { createdSessionId, signIn, signUp, setActive } = await startOAuthFlow({
-            redirectUrl: Linking.createURL('(tabs)/home', { scheme: 'myapp' }),
+            redirectUrl: Linking.createURL('/(tabs)/home', { scheme: 'myapp' }),
           })
-    
           // If sign in was successful, set the active session
           if (createdSessionId) {
-            //setActive!({ session: createdSessionId })
+              await setActive({ session: createdSessionId });
           } else {
             //this is the part that need fixing 
             // Use signIn or signUp returned from startOAuthFlow

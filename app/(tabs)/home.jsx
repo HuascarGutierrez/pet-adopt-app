@@ -6,8 +6,10 @@ import PetListByCategory from '../../components/Home/PetListByCategory'
 import AddNewPet from '../../components/Home/AddNewPet'
 import { FlatList } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
+import { useUser } from '@clerk/clerk-expo'
 
 export default function home() {
+  
   return (
     <View style={{
       padding: 20,

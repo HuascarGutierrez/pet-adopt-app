@@ -34,7 +34,7 @@ export default function MarkFavorite({pet, colorNotFavorite='white'}) {
     }
 
   return (
-    <Pressable>
+    <View>
         {favList?.includes(Number(pet.id))?
         <Pressable onPress={()=>{RemToFav()}}>
           <Ionicons name="heart" size={42} color="red" />
@@ -43,6 +43,6 @@ export default function MarkFavorite({pet, colorNotFavorite='white'}) {
           <Ionicons name="heart-outline" size={42} color={colorNotFavorite} />
         </Pressable>
         }
-    </Pressable>
+    </View>
   )
 }

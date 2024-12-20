@@ -35,9 +35,9 @@ export default function ChatScreen() {
       }))
 
       messageData.sort((a, b) => b.createdAt - a.createdAt)
-      messageData.map((message)=>{console.log(message.text,"______________", message.createdAt)})
+      //messageData.map((message)=>{console.log(message.text,"______________", message.createdAt)})
 
-  console.log('end_______')
+  //console.log('end_______')
 
       setMessages(messageData);
     })
