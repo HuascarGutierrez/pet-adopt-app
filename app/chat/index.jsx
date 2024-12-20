@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
-import { addDoc, collection, doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, onSnapshot, orderBy, Timestamp, where } from 'firebase/firestore';
 import { db } from '../../config/FirebaseConfig';
 import { useUser } from '@clerk/clerk-expo';
 import { GiftedChat, Time } from 'react-native-gifted-chat';
@@ -30,8 +30,15 @@ export default function ChatScreen() {
     const unsubscribe = onSnapshot(collection(db,'Chat',params?.id,'Messages'),(snapshot)=>{
       const messageData = snapshot.docs.map((doc)=>({
         _id: doc.id,
-        ...doc.data()
+        ...doc.data(),
+        createdAt: doc.data().createdAt.toDate(),
       }))
+
+      messageData.sort((a, b) => b.createdAt - a.createdAt)
+      messageData.map((message)=>{console.log(message.text,"______________", message.createdAt)})
+
+  console.log('end_______')
+
       setMessages(messageData);
     })
 
@@ -40,10 +47,11 @@ export default function ChatScreen() {
 
   const onSend = async(newMessage) => {
     setMessages((previousMessages)=>GiftedChat.append(previousMessages,newMessage));
-    newMessage[0].createdAt = moment().format('YYYY-MM-DD HH:mm:ss')
+    //newMessage[0].createdAt = moment().format('YYYY-MM-DD HH:mm:ss')
+    newMessage[0].createdAt = Timestamp.now();
     await addDoc(collection(db,'Chat',params.id,'Messages'),newMessage[0])
   }
-
+  
   return (
     <GiftedChat
       messages={messages}
