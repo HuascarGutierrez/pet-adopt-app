@@ -19,18 +19,24 @@ export default function Profile() {
     },
     {
       id: 2,
+      name: 'My Posts',
+      icon: 'bookmark',
+      path: '/user-post',
+    },
+    {
+      id: 3,
       name: 'Favorites',
       icon: 'heart',
       path: '/(tabs)/favorite',
     },
     {
-      id: 3,
+      id: 4,
       name: 'Inbox',
       icon: 'chatbox',
       path: '/(tabs)/inbox',
     },
     {
-      id: 4,
+      id: 5,
       name: 'Log out',
       icon: 'exit',
       path: 'logout',
